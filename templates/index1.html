@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Best Suitable Crops</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional CSS styles specific to this page */
+        .details {
+            padding: 20px;
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        
+        .mt-5 {
+            margin-top: 5rem;
+        }
+        
+        .upload {
+            display: block;
+            margin: 0 auto;
+            font-size: 21px;
+            margin-bottom: 20px;
+            /* CSS styles for the upload button */
+            padding: 10px 20px;
+            background-color: #4CAF57;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .predict {
+            display: block;
+            margin: 0 auto;
+            /* CSS styles for the predict button */
+            padding: 10px 20px;
+            font-size:21px;
+            background-color:#007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .image-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .img-preview {
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .img-thumbnail {
+            width: 200px;
+            height: auto;
+        }
+        
+        .container {
+            background-image: url('static/css/images/pexels-crusenho-agus-hennihuno-1251026.jpg');
+            
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: #f2f2f2;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        /* Title bar styles */
+        .title-bar {
+            background-color:#95C2FF;
+            color:#022355;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="title-bar">
+        <h1>Find out the Best Suitable Crops for Your Soil</h1>
+    </div>
+    
+    <section>
+        <div class="container-fluid details">
+            <form action="/predict" method="post" enctype="multipart/form-data" onsubmit="showloading()" required>
+                <input type="file" name="image" class="upload" onchange="previewImage(event)">
+                <input type="submit" value="Predict" class="predict">
+            </form>
+        </div>
+
+        <div class="image-section" style="display: none;">
+            <div class="img-preview" id="imagePreview"></div>
+
+            <div class="col-sm" style="margin-bottom: 23px;">
+                <span class="border border-primary">
+                    <img src="{{ user_image }}" alt="User Image" class="img-thumbnail">
+                </span>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <div class="container">
+            <h1 style="text-align: center; color: white;">.</h1>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2023 Best Suitable Crops.</p>
+    </footer>
+    
+    <script>
+        function previewImage(event) {
+            var imagePreview = document.getElementById("imagePreview");
+            imagePreview.innerHTML = "";
+
+            var file = event.target.files[0];
+            
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement("img");
+                    img.setAttribute("src", e.target.result);
+                    img.setAttribute("alt", "Preview Image");
+                    img.classList.add("img-thumbnail");
+                    imagePreview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+                
+                var imageSection = document.querySelector(".image-section");
+                imageSection.style.display = "block";
+            }
+        }
+        
+        function showloading() {
+            // Code to show loading animation
+        }
+    </script>
+</body>
+</html>
